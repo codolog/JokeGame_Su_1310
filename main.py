@@ -14,6 +14,9 @@ screen = pg.display.set_mode((Window.width, Window.height))
 clock = pg.time.Clock()
 
 class Button:
+    mouseIsOver = False
+    mouseIsClick = False
+    mouseIsDown = False
     # Конструктор
     def __init__(self, color, x, y, width, height):
         self.color = color
@@ -61,7 +64,17 @@ while running:
                 new_x = rnd.randint(0, Window.width)
                 new_y = rnd.randint(0, Window.height)
                 btn_no.jumpto(new_x, new_y)
-
+            btn_yes.mouseIsOver = btn_yes.is_over(mouse_x, mouse_y)
+        if btn_yes.mouseIsOver:
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                btn_yes.mouseIsDown = True
+            if event.type == pg.MOUSEBUTTONUP and event.button == 1:
+                if btn_yes.mouseIsDown:
+                    btn_yes.mouseIsClick = True
+        else:
+            btn_yes.mouseIsDown = False
+               
+            
     btn_yes.draw(screen)
     btn_no.draw(screen)
     
